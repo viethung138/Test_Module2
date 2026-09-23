@@ -16,7 +16,7 @@ public class App {
         int choice;
         do {
             displayMenu();
-            choice = getIntInput("Nhap lua chon: ");
+            choice = getIntInput("Nhập lựa chọn: ");
             switch (choice) {
                 case 1:
                     themMoi();
@@ -31,7 +31,7 @@ public class App {
                     System.out.println("Tam biet!");
                     break;
                 default:
-                    System.out.println("Lua chon khong hop le. Vui long nhap lai.");
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
             }
         } while (choice != 4);
     }
@@ -40,72 +40,62 @@ public class App {
      * Display the main menu
      */
     private static void displayMenu() {
-        System.out.println("\n========== QUAN LY BENH AN - BENH VIEN XYZ ==========");
-        System.out.println("1. Them moi benh an");
-        System.out.println("2. Xoa benh an");
-        System.out.println("3. Xem danh sach benh an");
-        System.out.println("4. Thoat");
+        System.out.println("\n========== QUẢN LÝ BỆNH ÁN - BỆNH VIỆN XYZ ==========");
+        System.out.println("1. Thêm mới bệnh án");
+        System.out.println("2. Xóa bệnh án");
+        System.out.println("3. Xem danh sách bệnh án");
+        System.out.println("4. Thoát");
         System.out.println("=====================================================");
     }
 
-    /**
-     * Feature 1: Add a new medical record
-     */
     private static void themMoi() {
-        System.out.println("\n--- THEM MOI BENH AN ---");
+        System.out.println("\n--- THÊM MỚI BỆNH ÁN ---");
 
-        // Choose record type
-        System.out.println("Chon loai benh an:");
-        System.out.println("1. Benh an thuong");
-        System.out.println("2. Benh an VIP");
-        int loai = getIntInput("Nhap lua chon (1 hoac 2): ");
+        System.out.println("Chọn loại bệnh án:");
+        System.out.println("1. Bệnh án thường");
+        System.out.println("2. Bệnh án VIP");
+        int loai = getIntInput("Nhập lựa chọn (1 hoặc 2): ");
 
         while (loai != 1 && loai != 2) {
             System.out.println("Lua chon khong hop le. Vui long nhap 1 hoac 2.");
             loai = getIntInput("Nhap lua chon (1 hoac 2): ");
         }
 
-        // Auto-increment STT
         int stt = service.getNextSTT();
-        System.out.println("So thu tu benh an: " + stt);
+        System.out.println("Số thứ tự bệnh án: " + stt);
 
-        // Input and validate Ma Benh An
         String maBenhAn;
         while (true) {
-            System.out.print("Nhap Ma Benh An (BA-XXX, voi XXX la so): ");
+            System.out.print("Nhập Mã Bệnh Án (BA-XXX, với XXX là số): ");
             maBenhAn = scanner.nextLine().trim();
             if (!Validator.isValidMaBenhAn(maBenhAn)) {
-                System.out.println("Loi: Ma benh an phai dung dinh dang BA-XXX, voi XXX la cac ki tu so.");
+                System.out.println("Lỗi: Mã bệnh án phải đúng định dạng BA-XXX, với XXX là các ký tự số.");
                 continue;
             }
-            // Check duplicate
             try {
                 if (service.isDuplicate(maBenhAn)) {
-                    throw new DuplicateMedicalRecordException("Benh an da ton tai.");
+                    throw new DuplicateMedicalRecordException("Bệnh án đã tồn tại.");
                 }
                 break;
             } catch (DuplicateMedicalRecordException e) {
-                System.out.println("Loi: " + e.getMessage() + " Vui long nhap lai.");
+                System.out.println("Lỗi: " + e.getMessage() + " Vui lòng nhập lại.");
             }
         }
 
-        // Input Ten Benh Nhan
-        System.out.print("Nhap Ten Benh Nhan: ");
+        System.out.print("Nhập Tên Bệnh Nhân: ");
         String tenBenhNhan = scanner.nextLine().trim();
 
-        // Input and validate Ngay Nhap Vien
         String ngayNhapVien;
         while (true) {
             System.out.print("Nhap Ngay Nhap Vien (dd/MM/yyyy): ");
             ngayNhapVien = scanner.nextLine().trim();
             if (!Validator.isValidDate(ngayNhapVien)) {
-                System.out.println("Loi: Ngay nhap vien phai dung dinh dang dd/MM/yyyy.");
+                System.out.println("Lỗi: Ngày nhập viện phải đúng định dạng dd/MM/yyyy.");
             } else {
                 break;
             }
         }
 
-        // Input and validate Ngay Ra Vien
         String ngayRaVien;
         while (true) {
             System.out.print("Nhap Ngay Ra Vien (dd/MM/yyyy): ");
@@ -121,14 +111,12 @@ public class App {
             break;
         }
 
-        // Input Ly Do Nhap Vien
         System.out.print("Nhap Ly Do Nhap Vien: ");
         String lyDoNhapVien = scanner.nextLine().trim();
 
         BenhAn record;
 
         if (loai == 1) {
-            // Benh An Thuong - input Phi Nam Vien
             long phiNamVien;
             while (true) {
                 System.out.print("Nhap Phi Nam Vien (VND): ");
@@ -146,7 +134,6 @@ public class App {
             record = new BenhAnThuong(stt, maBenhAn, tenBenhNhan,
                     ngayNhapVien, ngayRaVien, lyDoNhapVien, phiNamVien);
         } else {
-            // Benh An VIP - input Loai VIP
             String loaiVIP;
             while (true) {
                 System.out.println("Chon Loai VIP:");
@@ -174,7 +161,6 @@ public class App {
                 }
             }
 
-            // Input and validate Thoi Han VIP
             String thoiHanVIP;
             while (true) {
                 System.out.print("Nhap Thoi Han VIP (dd/MM/yyyy): ");
@@ -190,7 +176,6 @@ public class App {
                     ngayNhapVien, ngayRaVien, lyDoNhapVien, loaiVIP, thoiHanVIP);
         }
 
-        // Save to CSV
         try {
             service.addRecord(record);
             System.out.println("Them moi benh an thanh cong!");
@@ -199,9 +184,6 @@ public class App {
         }
     }
 
-    /**
-     * Feature 2: Delete a medical record
-     */
     private static void xoaBenhAn() {
         System.out.println("\n--- XOA BENH AN ---");
         System.out.print("Nhap Ma Benh An can xoa: ");
@@ -212,7 +194,6 @@ public class App {
             return;
         }
 
-        // Confirm deletion
         String confirm;
         while (true) {
             System.out.print("Ban co chac chan muon xoa benh an " + maBenhAn + "? (Yes/No): ");
@@ -235,17 +216,11 @@ public class App {
         }
     }
 
-    /**
-     * Feature 3: View all medical records
-     */
     private static void xemDanhSach() {
         System.out.println("\n--- DANH SACH BENH AN ---");
         service.displayAll();
     }
 
-    /**
-     * Helper: Get integer input from user
-     */
     private static int getIntInput(String prompt) {
         while (true) {
             System.out.print(prompt);
