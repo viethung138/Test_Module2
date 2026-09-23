@@ -87,7 +87,7 @@ public class App {
 
         String ngayNhapVien;
         while (true) {
-            System.out.print("Nhap Ngay Nhap Vien (dd/MM/yyyy): ");
+            System.out.print("Nhập Ngày Nhập Viện (dd/MM/yyyy): ");
             ngayNhapVien = scanner.nextLine().trim();
             if (!Validator.isValidDate(ngayNhapVien)) {
                 System.out.println("Lỗi: Ngày nhập viện phải đúng định dạng dd/MM/yyyy.");
@@ -98,20 +98,20 @@ public class App {
 
         String ngayRaVien;
         while (true) {
-            System.out.print("Nhap Ngay Ra Vien (dd/MM/yyyy): ");
+            System.out.print("Nhập Ngày Ra Viện (dd/MM/yyyy): ");
             ngayRaVien = scanner.nextLine().trim();
             if (!Validator.isValidDate(ngayRaVien)) {
-                System.out.println("Loi: Ngay ra vien phai dung dinh dang dd/MM/yyyy.");
+                System.out.println("Lỗi: Ngày ra viện phải đúng định dạng dd/MM/yyyy.");
                 continue;
             }
             if (!Validator.isAdmissionBeforeOrEqualDischarge(ngayNhapVien, ngayRaVien)) {
-                System.out.println("Loi: Ngay nhap vien phai nho hon hoac bang ngay ra vien.");
+                System.out.println("Lỗi: Ngày ra viện phải lớn hơn ngày nhập viện.");
                 continue;
             }
             break;
         }
 
-        System.out.print("Nhap Ly Do Nhap Vien: ");
+        System.out.print("Nhập Lý Do Nhập Viện: ");
         String lyDoNhapVien = scanner.nextLine().trim();
 
         BenhAn record;
@@ -119,16 +119,16 @@ public class App {
         if (loai == 1) {
             long phiNamVien;
             while (true) {
-                System.out.print("Nhap Phi Nam Vien (VND): ");
+                System.out.print("Nhập Phí Nằm Viện (VND): ");
                 try {
                     phiNamVien = Long.parseLong(scanner.nextLine().trim());
                     if (phiNamVien < 0) {
-                        System.out.println("Loi: Phi nam vien phai lon hon hoac bang 0.");
+                        System.out.println("Lỗi: Phí nằm viện phải lớn hơn hoặc bằng 0.");
                         continue;
                     }
                     break;
                 } catch (NumberFormatException e) {
-                    System.out.println("Loi: Vui long nhap so nguyen hop le.");
+                    System.out.println("Lỗi: Vui lòng nhập số nguyên hợp lệ.");
                 }
             }
             record = new BenhAnThuong(stt, maBenhAn, tenBenhNhan,
@@ -136,11 +136,11 @@ public class App {
         } else {
             String loaiVIP;
             while (true) {
-                System.out.println("Chon Loai VIP:");
+                System.out.println("Chọn Loại VIP:");
                 System.out.println("1. VIP I");
                 System.out.println("2. VIP II");
                 System.out.println("3. VIP III");
-                System.out.print("Nhap lua chon (1, 2 hoac 3): ");
+                System.out.print("Nhập lựa chọn (1, 2 hoặc 3): ");
                 String vipChoice = scanner.nextLine().trim();
                 switch (vipChoice) {
                     case "1":
@@ -153,7 +153,7 @@ public class App {
                         loaiVIP = "VIP III";
                         break;
                     default:
-                        System.out.println("Loi: Vui long chon 1, 2 hoac 3.");
+                        System.out.println("Lỗi: Vui lòng chọn 1, 2 hoặc 3.");
                         continue;
                 }
                 if (Validator.isValidVIPType(loaiVIP)) {
@@ -163,10 +163,10 @@ public class App {
 
             String thoiHanVIP;
             while (true) {
-                System.out.print("Nhap Thoi Han VIP (dd/MM/yyyy): ");
+                System.out.print("Nhập Thời Hạn VIP (dd/MM/yyyy): ");
                 thoiHanVIP = scanner.nextLine().trim();
                 if (!Validator.isValidDate(thoiHanVIP)) {
-                    System.out.println("Loi: Thoi han VIP phai dung dinh dang dd/MM/yyyy.");
+                    System.out.println("Lỗi: Thời hạn VIP phải đúng định dạng dd/MM/yyyy.");
                 } else {
                     break;
                 }
@@ -178,46 +178,46 @@ public class App {
 
         try {
             service.addRecord(record);
-            System.out.println("Them moi benh an thanh cong!");
+            System.out.println("Thêm mới bệnh án thành công!");
         } catch (DuplicateMedicalRecordException e) {
-            System.out.println("Loi: " + e.getMessage());
+            System.out.println("Lỗi: " + e.getMessage());
         }
     }
 
     private static void xoaBenhAn() {
-        System.out.println("\n--- XOA BENH AN ---");
-        System.out.print("Nhap Ma Benh An can xoa: ");
+        System.out.println("\n--- XÓA BỆNH ÁN ---");
+        System.out.print("Nhập Mã Bệnh Án cần xóa: ");
         String maBenhAn = scanner.nextLine().trim();
 
         if (!service.isDuplicate(maBenhAn)) {
-            System.out.println("Khong tim thay benh an co ma: " + maBenhAn);
+            System.out.println("Không tìm thấy bệnh án có mã: " + maBenhAn);
             return;
         }
 
         String confirm;
         while (true) {
-            System.out.print("Ban co chac chan muon xoa benh an " + maBenhAn + "? (Yes/No): ");
+            System.out.print("Bạn có chắc chắn muốn xóa bệnh án " + maBenhAn + "? (Yes/No): ");
             confirm = scanner.nextLine().trim();
             if (confirm.equalsIgnoreCase("Yes") || confirm.equalsIgnoreCase("No")) {
                 break;
             }
-            System.out.println("Vui long nhap 'Yes' hoac 'No'.");
+            System.out.println("Vui lòng nhập 'Yes' hoặc 'No'.");
         }
 
         if (confirm.equalsIgnoreCase("Yes")) {
             boolean deleted = service.deleteRecord(maBenhAn);
             if (deleted) {
-                System.out.println("Xoa benh an thanh cong!");
-                System.out.println("\nDanh sach benh an sau khi xoa:");
+                System.out.println("Xóa bệnh án thành công!");
+                System.out.println("\nDanh sách bệnh án sau khi xóa:");
                 service.displayAll();
             }
         } else {
-            System.out.println("Huy xoa. Quay ve menu chinh.");
+            System.out.println("Hủy xóa. Quay về menu chính.");
         }
     }
 
     private static void xemDanhSach() {
-        System.out.println("\n--- DANH SACH BENH AN ---");
+        System.out.println("\n--- DANH SÁCH BỆNH ÁN ---");
         service.displayAll();
     }
 
@@ -228,7 +228,7 @@ public class App {
                 int value = Integer.parseInt(scanner.nextLine().trim());
                 return value;
             } catch (NumberFormatException e) {
-                System.out.println("Loi: Vui long nhap so nguyen hop le.");
+                System.out.println("Lỗi: Vui lòng nhập số nguyên hợp lệ.");
             }
         }
     }
