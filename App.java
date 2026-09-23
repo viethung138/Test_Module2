@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.xml.validation.Validator;
+
 import src.exceptions.DuplicateMedicalRecordException;
 import src.models.BenhAn;
 import src.models.BenhAnThuong;
