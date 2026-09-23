@@ -52,7 +52,7 @@ public class QuanLyBenhAn {
         
     private BenhAn parseCSVLine(String line) {
         String[] parts = line.split(",");
-        if (parts.length < 10) {
+        if (parts.length < 7) {
             return null;
         }
 
@@ -132,6 +132,10 @@ public class QuanLyBenhAn {
         } catch (IOException e) {
             System.err.println("Error writing CSV: " + e.getMessage());
         }
+    }
+
+    public void addRecord(BenhAn benhAn) throws DuplicateMedicalRecordException {
+        addBenhAn(benhAn);
     }
 
     public boolean deleteRecord(String maBenhAn) {

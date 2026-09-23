@@ -32,7 +32,7 @@ public class BenhAnVIP extends BenhAn {
 
     @Override 
     public String toCSV() {
-        return getStt() + ", " + getMaBenhAn() + ", " + getTenBenhNhan() + ", " + getNgayNhapVien() + ", " + getNgayRaVien() + ", " + getLyDoNhapVien() + ", " + getLoaiBenhAn();
+        return getStt() + "," + getMaBenhAn() + "," + getTenBenhNhan() + "," + getNgayNhapVien() + "," + getNgayRaVien() + "," + getLyDoNhapVien() + "," + getLoaiBenhAn() + "," + loaiVip + "," + thoiHanVip;
     }
 
     @Override

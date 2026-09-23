@@ -22,7 +22,7 @@ public class BenhAnThuong extends BenhAn {
 
     @Override 
     public String toCSV() {
-        return getStt() + ", " + getMaBenhAn() + ", " + getTenBenhNhan() + ", " + getNgayNhapVien() + ", " + getNgayRaVien() + ", " + getLyDoNhapVien() + ", " + getLoaiBenhAn();
+        return getStt() + "," + getMaBenhAn() + "," + getTenBenhNhan() + "," + getNgayNhapVien() + "," + getNgayRaVien() + "," + getLyDoNhapVien() + "," + getLoaiBenhAn() + "," + phiNamVien;
     }
 
     @Override

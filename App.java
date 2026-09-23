@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-import javax.xml.validation.Validator;
+import src.utils.Validator;
 
 import src.exceptions.DuplicateMedicalRecordException;
 import src.models.BenhAn;
@@ -129,18 +129,18 @@ public class App {
 
         if (loai == 1) {
             // Benh An Thuong - input Phi Nam Vien
-            double phiNamVien;
+            long phiNamVien;
             while (true) {
                 System.out.print("Nhap Phi Nam Vien (VND): ");
                 try {
-                    phiNamVien = Double.parseDouble(scanner.nextLine().trim());
+                    phiNamVien = Long.parseLong(scanner.nextLine().trim());
                     if (phiNamVien < 0) {
                         System.out.println("Loi: Phi nam vien phai lon hon hoac bang 0.");
                         continue;
                     }
                     break;
                 } catch (NumberFormatException e) {
-                    System.out.println("Loi: Vui long nhap so hop le.");
+                    System.out.println("Loi: Vui long nhap so nguyen hop le.");
                 }
             }
             record = new BenhAnThuong(stt, maBenhAn, tenBenhNhan,
