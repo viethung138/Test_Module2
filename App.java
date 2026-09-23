@@ -82,8 +82,16 @@ public class App {
             }
         }
 
-        System.out.print("Nhập Tên Bệnh Nhân: ");
-        String tenBenhNhan = scanner.nextLine().trim();
+        String tenBenhNhan;
+        while (true) {
+            System.out.print("Nhập Tên Bệnh Nhân: ");
+            tenBenhNhan = scanner.nextLine().trim();
+            if (!Validator.isValidName(tenBenhNhan)) {
+                System.out.println("Lỗi: Tên bệnh nhân không hợp lệ (chỉ chứa chữ cái và không được để trống).");
+            } else {
+                break;
+            }
+        }
 
         String ngayNhapVien;
         while (true) {

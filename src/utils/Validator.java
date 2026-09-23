@@ -61,6 +61,6 @@ public class Validator {
     }
 
     public static boolean isValidName(String name) {
-        return name != null && name.matches("^[A-Za-z ]+$");
+        return name != null && !name.trim().isEmpty() && name.matches("^[\\p{L} ]+$");
     }
 }
